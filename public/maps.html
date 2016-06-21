@@ -16,12 +16,13 @@
     <input type="button" class="button" value="默认样式点聚合" id="add0"/>
 </div>
 <script>
-    var cluster = [], markers = [];
+    var cluster = {}, markers = [];
     var map = new AMap.Map("container", {
         resizeEnable: true,
         center: [116.397428, 39.90923],
         zoom: 13,
-        mapStyle: dark
+        mapStyle: "blue_night",
+        features:["bg","road"]
     });
 function generatorMarks(){
     markers = [];
@@ -31,7 +32,7 @@ function generatorMarks(){
     var ne = mapBounds.getNorthEast();
     var lngSpan = Math.abs(sw.lng - ne.lng);
     var latSpan = Math.abs(ne.lat - sw.lat);
-    for (var i = 0; i < 500; i++) {
+    for (var i = 0; i < 200; i++) {
         var markerPosition = [sw.lng + lngSpan * (Math.random() * 1) + lngSpan * (Math.random() * 1), ne.lat + lngSpan * (Math.random() * 1) - latSpan * (Math.random() * 1)];
         var marker = new AMap.Marker({
             position: markerPosition,
@@ -72,7 +73,7 @@ function generatorMarks(){
                 textColor: '#CC0066'
             }];
             map.plugin(["AMap.MarkerClusterer"], function() {
-                cluster.push(new AMap.MarkerClusterer(map, markers));
+                cluster["0"] = new AMap.MarkerClusterer(map, markers);
             });
         } else {
           generatorMarks();
@@ -91,9 +92,9 @@ function generatorMarks(){
                 textColor: '#CC0066'
             }];
             map.plugin(["AMap.MarkerClusterer"], function() {
-                cluster.push (new AMap.MarkerClusterer(map, markers,{
+                cluster["1"] = new AMap.MarkerClusterer(map, markers,{
                  	styles:sts1 
-                }));
+                });
             });
         }
     }
