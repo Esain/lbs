@@ -24,8 +24,10 @@
         mapStyle: "blue_night",
         features:["bg","road"]
     });
-function generatorMarks(){
+function generatorMarks(index){
     markers = [];
+    var icon = "images/flag"+index+".png";
+
       // 随机向地图添加500个标注点
     var mapBounds = map.getBounds();
     var sw = mapBounds.getSouthWest();
@@ -36,7 +38,7 @@ function generatorMarks(){
         var markerPosition = [sw.lng + lngSpan * (Math.random() * 1) + lngSpan * (Math.random() * 1), ne.lat + lngSpan * (Math.random() * 1) - latSpan * (Math.random() * 1)];
         var marker = new AMap.Marker({
             position: markerPosition,
-            icon: "http://amappc.cn-hangzhou.oss-pub.aliyun-inc.com/lbs/static/img/marker.png",
+            icon: icon,
             offset: {x: -8,y: -34}
         });
         markers.push(marker);
@@ -57,43 +59,47 @@ function generatorMarks(){
     function addCluster(tag) {
      
         if (tag == 1) {
-          generatorMarks();
+          generatorMarks(1);
             var sts = [{
-                url: "http://lbs.amap.com/wp-content/uploads/2014/06/1.png",
+                url: "images/cluster1.png",
                 size: new AMap.Size(32, 32),
                 offset: new AMap.Pixel(-16, -30)
             }, {
-                url: "http://lbs.amap.com/wp-content/uploads/2014/06/2.png",
+                url: "images/cluster1.png",
                 size: new AMap.Size(32, 32),
                 offset: new AMap.Pixel(-16, -30)
             }, {
-                url: "http://lbs.amap.com/wp-content/uploads/2014/06/3.png",
+                url: "images/cluster1.png",
                 size: new AMap.Size(48, 48),
                 offset: new AMap.Pixel(-24, -45),
                 textColor: '#CC0066'
             }];
             map.plugin(["AMap.MarkerClusterer"], function() {
-                cluster["0"] = new AMap.MarkerClusterer(map, markers);
+                cluster["0"] = new AMap.MarkerClusterer(map, markers,{
+                    styles:sts,
+                    gridSize:120
+                });
             });
         } else {
-          generatorMarks();
+          generatorMarks(0);
           var sts1 = [{
-                url: "https://ss1.baidu.com/6ONXsjip0QIZ8tyhnq/it/u=3158627554,3399988752&fm=58",
+                url: "images/cluster0.png",
                 size: new AMap.Size(32, 32),
                 offset: new AMap.Pixel(-16, -30)
             }, {
-                url: "https://ss1.baidu.com/6ONXsjip0QIZ8tyhnq/it/u=3158627554,3399988752&fm=58",
+                url: "images/cluster0.png",
                 size: new AMap.Size(32, 32),
                 offset: new AMap.Pixel(-16, -30)
             }, {
-                url: "https://ss1.baidu.com/6ONXsjip0QIZ8tyhnq/it/u=3158627554,3399988752&fm=58",
+                url: "images/cluster0.png",
                 size: new AMap.Size(48, 48),
                 offset: new AMap.Pixel(-24, -45),
                 textColor: '#CC0066'
             }];
             map.plugin(["AMap.MarkerClusterer"], function() {
                 cluster["1"] = new AMap.MarkerClusterer(map, markers,{
-                 	styles:sts1 
+                 	styles:sts1,
+                    gridSize:120
                 });
             });
         }
